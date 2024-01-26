@@ -4,17 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Note Taking App</title>
-    <!-- Include the CSS file for styling (if separate) -->
+    <!-- Include the CSS file for styling -->
     <link rel="stylesheet" href="styles.css">
     <!-- Include Quill stylesheet -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
     <!-- Include Quill library -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </head>
 <body>
-    <div id="editor" style="height:100vh;"></div>
-    <!-- Include the JavaScript file for editor functionality -->
+    <div id="note-status" style="display: none;">Active Note: None</div>
+    <!-- Initial welcome overlay -->
+    <div id="welcome-overlay">
+        <div id="welcome-message">
+          Click anywhere to create a note
+        </div>
+    </div>
+  
+    <!-- Buttons for creating notes -->
+<div id="buttons-container">
+    <button onclick="createNewNote()">New Note</button>
+</div>
+
+<!-- Sidebar for notes hierarchy will be updated dynamically -->
+<div id="sidebar" style="display: none;"></div>
+
+  
+    <!-- Hidden editor container that will be shown when a note is created -->
+    <div id="editor-container" style="display: none;">
+        <div id="editor" style="height:100vh;"></div>
+    </div>  
+
     <script src="script.js"></script>
 </body>
 </html>

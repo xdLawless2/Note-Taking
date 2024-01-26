@@ -1,61 +1,159 @@
-/* Set the body background to a darker color */
-body {
-    background: #2c2f33; /* Slightly darker color for the non-writing area */
-    color: #ffffff; /* White text for better readability in dark mode */
+/* Global Styles */
+body, html {
     height: 100%;
     margin: 0;
     padding: 0;
+    background: #2c2f33; /* Main background color */
+    color: #ffffff; /* Main text color */
     font-family: 'Arial', sans-serif;
 }
 
-/* Style the editor container */
-/* Updated style for the editor container */
-#editor {
-    background: #383444; /* Main writing page background color */
-    color: #ffffff; /* White text color */
+/* Welcome Overlay Styles */
+#welcome-overlay {
+    position: fixed; /* Use fixed to cover the entire viewport */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+#welcome-message {
     padding: 20px;
-    box-sizing: border-box;
+    border: 2px dashed white;
+    border-radius: 10px;
+}
+
+/* Sidebar Styles */
+#sidebar {
+    position: fixed; /* Use fixed to cover from top to bottom */
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px; /* Fixed width for the sidebar */
+    background: #333;
+    color: white;
     overflow-y: auto;
-    border: none; /* Remove border or set to a color that suits dark mode */
-    margin: 10px;
-    min-height: 90vh; /* Set min-height to 90vh to leave space for the toolbar */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Drop shadow */
+    display: none; /* Initially hidden */
+}
+
+/* Editor Container Styles */
+#editor-container {
+    position: absolute; /* Use absolute to position it next to the sidebar */
+    top: 0;
+    left: 250px; /* Offset by the sidebar's width */
+    right: 0;
+    bottom: 0;
+    display: none; /* Initially hidden */
+}
+
+#sidebar {
+    /* ... existing styles ... */
+    top: 60px; /* Adjust this value to be the height of your #buttons-container */
+    max-height: calc(100% - 60px); /* Adjust this value to be the height of your #buttons-container */
+}
+
+#editor-container {
+    /* ... existing styles ... */
+    top: 60px; /* Adjust this value to be the height of your #buttons-container */
+}
+
+/* Set the editor height to take up the remaining height */
+#editor {
+    /* ... existing styles ... */
+    height: calc(100% - 60px); /* Adjust this value to be the height of your #buttons-container */
+}
+
+/* Style for the buttons container to ensure it has the correct height */
+#buttons-container {
+    /* ... existing styles ... */
+    height: 60px; /* Set the height of your buttons container */
+    line-height: 50px; /* Center the buttons vertically */
+    box-sizing: border-box;
+}
+
+/* Additional CSS for delete button and note container */
+.note-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.note-title {
+    cursor: pointer;
+    /* Add any additional styles you want for the note title */
+}
+
+/* Add this to your styles.css */
+
+#note-status {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    color: white;
+    background: rgba(44, 47, 51, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 101; /* Make sure it's above other elements */
+    display: none; /* Hide by default, show when a note is active */
 }
 
 
-/* Style the Quill editor to match the dark mode */
+.delete-btn {
+    background-color: #a00; /* Red background for delete button */
+    color: white;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    /* Add any additional styles you want for the delete button */
+}
+
+.delete-btn:hover {
+    background-color: #f00; /* Brighter red on hover */
+}
+
+
+/* Quill Editor Styles */
+#editor {
+    height: 100%;
+    background: #383444; /* Editor background color */
+}
+
+/* Quill Toolbar Override */
 .ql-toolbar {
-    background: #2c2f33; /* Slightly darker color for the toolbar background */
-    border-bottom: 1px solid #4a4a4a; /* Dark border for the toolbar */
+    border-radius: 0; /* Remove border radius if present */
+    border: none; /* Remove borders if present */
+    background: #2c2f33; /* Toolbar background color */
 }
 
-.ql-container {
-    border: none; /* Remove border for the Quill container */
+#buttons-container {
+    position: fixed; /* Use fixed to cover from top to bottom */
+    top: 0;
+    left: 0;
+    z-index: 100; /* Ensure buttons are above other elements */
+    background: #333;
+    padding: 10px;
 }
 
-/* You might also want to style the text color of the toolbar items if necessary */
-.ql-toolbar .ql-picker-label {
-    color: #ffffff; /* White color for the toolbar text */
-}
 
-.ql-toolbar .ql-picker-item {
-    color: #ffffff; /* White color for the toolbar dropdown items */
-}
-
-/* Style the scrollbar for dark mode if you like */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #2c2f33;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #555;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #666;
-}
+button {
+    background-color: #555; /* Dark background color */
+    color: #fff; /* White text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  button:hover {
+    background-color: #777; /* Lighter background on hover */
+  }
+  
