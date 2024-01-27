@@ -45,7 +45,6 @@ function createNewNote() {
     // Show the editor and sidebar
     document.getElementById('editor-container').style.display = 'block';
     document.getElementById('sidebar').style.display = 'block';
-    document.getElementById('welcome-overlay').style.display = 'none';
     
     // Create a new note with empty content
     var note = {
@@ -67,6 +66,34 @@ function createNewNote() {
 
     // Update the sidebar to include the new note
     updateSidebar();
+
+    // Hide the "No notes available" message
+    var noNotesMessage = document.getElementById('no-notes');
+    if (noNotesMessage) {
+        noNotesMessage.style.display = 'none';
+    }
+}
+
+function checkForNotes() {
+    if (data.notes.length === 0) {
+        // Instead of replacing innerHTML, let's hide the Quill editor and show the message
+        document.getElementById('editor-container').style.display = 'none';
+        var noNotesMessage = document.getElementById('no-notes');
+        if (!noNotesMessage) {
+            noNotesMessage = document.createElement('div');
+            noNotesMessage.id = 'no-notes';
+            noNotesMessage.style.textAlign = 'center';
+            noNotesMessage.style.padding = '20px';
+            noNotesMessage.style.cursor = 'pointer';
+            noNotesMessage.textContent = 'No notes are available, click here to create one';
+            document.body.appendChild(noNotesMessage); // Append it somewhere visible
+            noNotesMessage.addEventListener('click', createNewNote);
+        }
+        noNotesMessage.style.display = 'block'; // Show the message
+    } else {
+        document.getElementById('no-notes').style.display = 'none'; // Hide the message
+        document.getElementById('editor-container').style.display = 'block'; // Show the editor
+    }
 }
 
 function displayNoteEditor(noteId) {
@@ -159,17 +186,46 @@ function deleteNote(noteId) {
     saveCurrentNote();
     // Remove the note with the given id from the data object
     data.notes = data.notes.filter(note => note.id !== noteId);
+
     // Update the sidebar to reflect the changes
     updateSidebar();
+
     // Save the updated data to local storage
     saveToLocalStorage();
+
+    // Find the index of the deleted note
+    var noteIndex = data.notes.findIndex(note => note.id === noteId);
+
+    // Remove the note with the given id from the data object
+    data.notes = data.notes.filter(note => note.id !== noteId);
+
     // Clear the editor if the deleted note was being displayed
     if (activeNoteId === noteId) {
         quill.setContents([{ insert: '\n' }]); // Reset editor content
         activeNoteId = null; // Reset active note id
         updateActiveNoteStatus(null);
     }
+
+    if (data.notes.length > 0) {
+        var newActiveIndex = noteIndex > 0 ? noteIndex - 1 : 0;
+        displayNoteEditor(data.notes[newActiveIndex].id);
+    } else {
+        // If no notes are left, show the "No notes available" message
+        checkForNotes();
+    }
 }
+
+document.getElementById('insert-response').addEventListener('click', function() {
+    var botResponse = document.getElementById('bot-response').textContent;
+    if (activeNoteId !== null && quill) {
+        var range = quill.getSelection();
+        if (range) {
+            quill.insertText(range.index, botResponse);
+        } else {
+            quill.insertText(quill.getLength(), botResponse);
+        }
+    }
+});
 
 function saveCurrentNote() {
     if (activeNoteId !== null) {
@@ -181,6 +237,12 @@ function saveCurrentNote() {
     }
 }
 
+// Call checkForNotes when loading and after deleting notes
+window.onload = function() {
+    loadFromLocalStorage();
+    updateSidebar();
+    checkForNotes(); // Call this instead of initQuill directly
+};
 
 window.onload = function() {
     loadFromLocalStorage();

@@ -48,7 +48,7 @@ body, html {
     position: absolute; /* Use absolute to position it next to the sidebar */
     top: 0;
     left: 250px; /* Offset by the sidebar's width */
-    right: 0;
+    right: 300px;
     bottom: 0;
     display: none; /* Initially hidden */
 }
@@ -74,7 +74,7 @@ body, html {
 #buttons-container {
     /* ... existing styles ... */
     height: 60px; /* Set the height of your buttons container */
-    line-height: 50px; /* Center the buttons vertically */
+    line-height: 10px; /* Center the buttons vertically */
     box-sizing: border-box;
 }
 
@@ -93,6 +93,10 @@ body, html {
 
 /* Add this to your styles.css */
 
+#url{
+    border-radius: 5px;
+}
+
 #note-status {
     position: fixed;
     right: 10px;
@@ -105,6 +109,50 @@ body, html {
     display: none; /* Hide by default, show when a note is active */
 }
 
+#sidebar, #editor-container {
+    /* ... existing styles ... */
+    top: 50px; /* This should be the height of your #buttons-container */
+}
+
+/* Add a container for the form and bot response */
+#right-container {
+    position: fixed; /* Fixed position to place it on the right side */
+    top: 0; /* Align to the top */
+    right: 0; /* Align to the right side */
+    width: 300px; /* Set a fixed width */
+    height: 100%; /* Full height */
+    background: #2c2f33; /* Background color */
+    padding: 20px; /* Padding around the content */
+    box-sizing: border-box; /* Include padding in the width */
+    overflow-y: auto; /* Enable scrolling for overflow content */
+    z-index: 10; /* Ensure it's above other elements */
+}
+
+#insert-response {
+    background-color: #4CAF50; /* Green background color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Space above the button */
+}
+
+/* Style the form inside the right container */
+#right-container #summarize-form {
+    display: flex;
+    flex-direction: column; /* Stack form fields vertically */
+    margin-bottom: 20px; /* Space between form and bot response */
+}
+
+/* Style the bot response inside the right container */
+#right-container #bot-response {
+    background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 50px; /* Minimum height */
+    word-wrap: break-word; /* Ensure long text wraps */
+}
 
 .delete-btn {
     background-color: #a00; /* Red background for delete button */

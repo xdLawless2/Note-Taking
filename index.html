@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.4/dist/tailwind.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Note Taking App</title>
@@ -12,6 +15,16 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </head>
 <body>
+    <div id="right-container">
+        
+    <form id="summarize-form" action="/summarize" method="post">
+        <input type="url" id="url" name="url" placeholder="Enter URL to summarize" required>
+        <input type="submit" value="Summarize" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    </form>
+    <div id="bot-response"></div>
+    <button id="insert-response">Insert</button>
+    </div>
+    
     <div id="note-status" style="display: none;">Active Note: None</div>
     <!-- Initial welcome overlay -->
     <div id="welcome-overlay">
@@ -33,7 +46,26 @@
     <div id="editor-container" style="display: none;">
         <div id="editor" style="height:100vh;"></div>
     </div>  
-
+    <script>
+        document.getElementById('summarize-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('bot-response').textContent = ''; // Clear previous response
+            var url = document.getElementById('url').value;
+            fetch('/summarize', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'url=' + encodeURIComponent(url)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the bot's message in the HTML
+                document.getElementById('bot-response').textContent = data.message;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+        </script>
     <script src="script.js"></script>
 </body>
 </html>
