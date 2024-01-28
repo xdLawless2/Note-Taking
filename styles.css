@@ -88,13 +88,11 @@ body, html {
 
 .note-title {
     cursor: pointer;
-    /* Add any additional styles you want for the note title */
 }
-
-/* Add this to your styles.css */
 
 #url{
     border-radius: 5px;
+    color: black;
 }
 
 #note-status {

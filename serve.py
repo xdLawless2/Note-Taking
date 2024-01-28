@@ -32,7 +32,8 @@ def summarize():
         data=json.dumps({
             "model": "mistralai/mistral-7b-instruct",
             "messages": [
-                {"role": "user", "content": "Your only purpose to summarise text. Summarise this text in a well formatted way. Only and ONLY reply with the summary and no other jargon, greeting or goodbye: " + full_text}
+                {"role": "system", "content": "The user will provide you with a long peice of text from a website to summarise. Your job is to take that long garbled text and summarise it in a clean, readable and concise manner for the user, which HAS to be under 500-600 words. Only and ONLY reply with the clean and synthesized summary and no other preamble, greeting or goodbye."},
+                {"role": "user", "content": "Summarise this for me please: "+ full_text}
             ]
         })
     )
